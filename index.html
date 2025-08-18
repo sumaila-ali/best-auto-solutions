@@ -1,456 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <base target="_top">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Data Collection Form</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        /* Custom styles for form elements and buttons */
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-
-        .form-group {
-            position: relative;
-            margin-bottom: 1.5rem;
-        }
-
-        .form-label {
-            display: block;
-            font-size: 0.875rem; /* sm */
-            font-weight: 500; /* medium */
-            color: #374151; /* gray-700 */
-            margin-bottom: 0.5rem;
-        }
-
-        .form-input {
-            display: block;
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border: 1px solid #D1D5DB; /* gray-300 */
-            border-radius: 0.5rem; /* rounded-md */
-            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* shadow-sm */
-            font-size: 0.875rem; /* sm */
-            color: #1F2937; /* gray-900 */
-            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: #3B82F6; /* blue-500 */
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5); /* ring-blue-500 with opacity */
-        }
-
-        .form-input::placeholder {
-            color: #9CA3AF; /* gray-400 */
-        }
-
-        .btn-primary {
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            padding: 0.75rem 1.5rem;
-            border: transparent;
-            border-radius: 0.5rem;
-            font-size: 0.9375rem; /* base */
-            font-weight: 600; /* semibold */
-            color: #ffffff;
-            background-color: #2563EB; /* blue-600 */
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
-            transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-            cursor: pointer;
-        }
-
-        .btn-primary:hover {
-            background-color: #1D4ED8; /* blue-700 */
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
-
-        .btn-primary:focus {
-            outline: none;
-            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.5); /* ring-blue-500 with opacity */
-        }
-
-        .btn-primary:disabled {
-            background-color: #93C5FD; /* blue-300 */
-            cursor: not-allowed;
-        }
-
-        .btn-secondary {
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            padding: 0.75rem 1.5rem;
-            border: 1px solid #D1D5DB; /* gray-300 */
-            border-radius: 0.5rem;
-            font-size: 0.9375rem; /* base */
-            font-weight: 600; /* semibold */
-            color: #4B5563; /* gray-700 */
-            background-color: #ffffff;
-            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* shadow-sm */
-            transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
-            cursor: pointer;
-        }
-
-        .btn-secondary:hover {
-            background-color: #F9FAFB; /* gray-50 */
-            border-color: #9CA3AF; /* gray-400 */
-        }
-
-        .btn-secondary:focus {
-            outline: none;
-            box-shadow: 0 0 0 4px rgba(107, 114, 128, 0.5); /* ring-gray-500 with opacity */
-        }
-
-        /* Custom checkbox/radio styling */
-        .form-checkbox, .form-radio {
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            display: inline-block;
-            height: 1.25rem; /* h-5 */
-            width: 1.25rem; /* w-5 */
-            border: 1px solid #D1D5DB; /* gray-300 */
-            border-radius: 0.25rem; /* rounded */
-            vertical-align: middle;
-            cursor: pointer;
-            position: relative;
-            transition: background-color 0.2s, border-color 0.2s;
-        }
-
-        .form-radio {
-            border-radius: 50%; /* rounded-full */
-        }
-
-        .form-checkbox:checked {
-            background-color: #3B82F6; /* blue-600 */
-            border-color: #3B82F6;
-        }
-
-        .form-radio:checked {
-            background-color: #3B82F6; /* blue-600 */
-            border-color: #3B82F6;
-        }
-
-        .form-checkbox:checked::after {
-            content: '';
-            display: block;
-            width: 0.5rem;
-            height: 0.75rem;
-            border: solid white;
-            border-width: 0 2px 2px 0;
-            transform: rotate(45deg) translate(-50%, -50%);
-            position: absolute;
-            top: 50%;
-            left: 50%;
-        }
-
-        .form-radio:checked::after {
-            content: '';
-            display: block;
-            width: 0.5rem;
-            height: 0.5rem;
-            border-radius: 50%;
-            background-color: white;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        .form-checkbox:focus, .form-radio:focus {
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5); /* focus:ring-blue-500 */
-        }
-
-        /* Custom alert modal styles */
-        .modal {
-            display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
-            z-index: 1000; /* Sit on top */
-            left: 0;
-            top: 0;
-            width: 100%; /* Full width */
-            height: 100%; /* Full height */
-            overflow: auto; /* Enable scroll if needed */
-            background-color: rgba(0,0,0,0.5); /* Black w/ opacity */
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            background-color: #fefefe;
-            margin: auto;
-            padding: 20px;
-            border-radius: 0.75rem;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            max-width: 400px;
-            width: 90%;
-            text-align: center;
-        }
-    </style>
+    <title>Simple Form</title>
 </head>
-<body class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4 sm:p-6 lg:p-8">
+<body>
 
-    <div class="bg-white p-6 sm:p-8 rounded-xl shadow-2xl w-full max-w-2xl border border-gray-200">
-        <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-8 text-center leading-tight">
-            Best Auto Solutions Service Request Form
-        </h2>
-        <form id="dataForm" class="space-y-6">
-            <div class="form-group">
-                <label for="name" class="form-label">Name</label>
-                <input type="text" id="name" name="name" class="form-input" placeholder="Enter your full name" required>
-            </div>
+    <h1>Simple Data Collection Form</h1>
+    <form id="testForm">
+        <label for="message">Your Message:</label><br>
+        <input type="text" id="message" name="message" required><br><br>
+        <button type="submit">Submit</button>
+    </form>
 
-            <div class="form-group">
-                <label for="phoneNumber" class="form-label">Phone Number</label>
-                <input type="tel" id="phoneNumber" name="phoneNumber" class="form-input" placeholder="e.g., +233 24 123 4567" required>
-            </div>
-
-            <div class="form-group">
-                <label for="tier" class="form-label">Tier</label>
-                <div class="relative">
-                    <select id="tier" name="tier" class="form-input appearance-none pr-8" required>
-                        <option value="" disabled selected>Select your Tier</option>
-                        <option value="Bronze">Bronze</option>
-                        <option value="Silver">Silver</option>
-                        <option value="Gold">Gold</option>
-                        <option value="Platinum">Platinum</option>
-                        <option value="Diamond">Diamond</option>
-                    </select>
-                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 6.757 7.586 5.343 9z"/></svg>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="driversLicense" class="form-label">Driver's License</label>
-                <input type="text" id="driversLicense" name="driversLicense" class="form-input" placeholder="Enter driver's license number" required>
-            </div>
-
-            <div class="form-group">
-                <label for="placeOfResidence" class="form-label">Place of Residence</label>
-                <input type="text" id="placeOfResidence" name="placeOfResidence" class="form-input" placeholder="Enter your place of residence" required>
-            </div>
-
-            <div class="form-group">
-                <label for="emergencyContactName" class="form-label">Emergency Contact Name</label>
-                <input type="text" id="emergencyContactName" name="emergencyContactName" class="form-input" placeholder="Enter emergency contact's name" required>
-            </div>
-
-            <div class="form-group">
-                <label for="emergencyContactPhoneNumber" class="form-label">Emergency Contact Phone Number</label>
-                <input type="tel" id="emergencyContactPhoneNumber" name="emergencyContactPhoneNumber" class="form-input" placeholder="e.g., +233 20 987 6543" required>
-            </div>
-            <div class="form-group">
-              <label class="form-label mb-2">Are you the owner of the vehicle?</label>
-              <div class="flex items-center space-x-6">
-                <label class="inline-flex items-center cursor-pointer">
-                  <input type="radio" name="vehicleOwner" value="Yes" class="form-radio h-5 w-5 text-blue-600 border-gray-300 focus:ring-blue-500" required>
-                  <span class="ml-2 text-gray-800 text-base">Yes</span>
-                </label>
-              <label class="inline-flex items-center cursor-pointer">
-                <input type="radio" name="vehicleOwner" value="No" class="form-radio h-5 w-5 text-blue-600 border-gray-300 focus:ring-blue-500">
-                <span class="ml-2 text-gray-800 text-base">No</span>
-              </label>
-              </div>
-            </div>
-            
-
-            <div id="carDetailsSection" class="space-y-4 p-5 rounded-lg bg-blue-50 border border-blue-200 shadow-inner">
-                <h3 class="text-xl font-semibold text-blue-800 mb-3">Car Details</h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div class="form-group">
-                        <label for="carMake" class="form-label">Make</label>
-                        <input type="text" id="carMake" name="carMake" class="form-input" placeholder="e.g., Toyota" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="carModel" class="form-label">Model</label>
-                        <input type="text" id="carModel" name="carModel" class="form-input" placeholder="e.g., Camry" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="carYear" class="form-label">Year</label>
-                        <input type="number" id="carYear" name="carYear" class="form-input" placeholder="e.g., 2020" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="carNumber" class="form-label">Car Number</label>
-                        <input type="text" id="carNumber" name="carNumber" class="form-input" placeholder="e.g., GR 1234-21" required>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label mb-3">Services of Interest</label>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <label class="flex items-center bg-gray-50 p-4 rounded-lg shadow-sm cursor-pointer hover:bg-gray-100 transition duration-200 ease-in-out border border-gray-200">
-                        <input type="checkbox" name="servicesOfInterest" value="Oil change" class="form-checkbox h-5 w-5 text-blue-600 rounded focus:ring-blue-500">
-                        <span class="ml-3 text-gray-800 text-base">Oil change</span>
-                    </label>
-                    <label class="flex items-center bg-gray-50 p-4 rounded-lg shadow-sm cursor-pointer hover:bg-gray-100 transition duration-200 ease-in-out border border-gray-200">
-                        <input type="checkbox" name="servicesOfInterest" value="Suspension and Brakes" class="form-checkbox h-5 w-5 text-blue-600 rounded focus:ring-blue-500">
-                        <span class="ml-3 text-gray-800 text-base">Suspension and Brakes</span>
-                    </label>
-                    <label class="flex items-center bg-gray-50 p-4 rounded-lg shadow-sm cursor-pointer hover:bg-gray-100 transition duration-200 ease-in-out border border-gray-200">
-                        <input type="checkbox" name="servicesOfInterest" value="Diagnostics and Electricals" class="form-checkbox h-5 w-5 text-blue-600 rounded focus:ring-blue-500">
-                        <span class="ml-3 text-gray-800 text-base">Diagnostics and Electricals</span>
-                    </label>
-                    <label class="flex items-center bg-gray-50 p-4 rounded-lg shadow-sm cursor-pointer hover:bg-gray-100 transition duration-200 ease-in-out border border-gray-200">
-                        <input type="checkbox" name="servicesOfInterest" value="Battery" class="form-checkbox h-5 w-5 text-blue-600 rounded focus:ring-blue-500">
-                        <span class="ml-3 text-gray-800 text-base">Battery</span>
-                    </label>
-                    <label class="flex items-center bg-gray-50 p-4 rounded-lg shadow-sm cursor-pointer hover:bg-gray-100 transition duration-200 ease-in-out border border-gray-200">
-                        <input type="checkbox" name="servicesOfInterest" value="Tyres" class="form-checkbox h-5 w-5 text-blue-600 rounded focus:ring-blue-500">
-                        <span class="ml-3 text-gray-800 text-base">Tyres</span>
-                    </label>
-                    <label class="flex items-center bg-gray-50 p-4 rounded-lg shadow-sm cursor-pointer hover:bg-gray-100 transition duration-200 ease-in-out border border-gray-200">
-                        <input type="checkbox" name="servicesOfInterest" value="Body works and Spray" class="form-checkbox h-5 w-5 text-blue-600 rounded focus:ring-blue-500">
-                        <span class="ml-3 text-gray-800 text-base">Body works and Spray</span>
-                    </label>
-                    <label class="flex items-center bg-gray-50 p-4 rounded-lg shadow-sm cursor-pointer hover:bg-gray-100 transition duration-200 ease-in-out border border-gray-200">
-                        <input type="checkbox" name="servicesOfInterest" value="AC service and repairs" class="form-checkbox h-5 w-5 text-blue-600 rounded focus:ring-blue-500">
-                        <span class="ml-3 text-gray-800 text-base">AC service and repairs</span>
-                    </label>
-                    <label class="flex items-center bg-gray-50 p-4 rounded-lg shadow-sm cursor-pointer hover:bg-gray-100 transition duration-200 ease-in-out border border-gray-200">
-                        <input type="checkbox" name="servicesOfInterest" value="General minor repairs" class="form-checkbox h-5 w-5 text-blue-600 rounded focus:ring-blue-500">
-                        <span class="ml-3 text-gray-800 text-base">General minor repairs</span>
-                    </label>
-                </div>
-            </div>
-
-            <div class="flex flex-col sm:flex-row justify-end space-y-3 sm:space-y-0 sm:space-x-4 pt-6">
-                <button type="button" id="clearFormBtn" class="btn-secondary">
-                    Clear Form
-                </button>
-                <button type="submit" id="submitBtn" class="btn-primary">
-                    <span id="submitSpinner" class="hidden animate-spin h-5 w-5 mr-3 text-white">
-                         <svg class="w-full h-full" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
-                    </span>
-                    <svg id="submitIcon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
-                    <span id="submitBtnText">Submit Data</span>
-                </button>
-            </div>
-        </form>
-    </div>
-
-    <div id="customAlertModal" class="modal">
-        <div class="modal-content">
-            <h3 class="text-lg font-semibold text-gray-800 mb-4">Notification</h3>
-            <p id="alertMessage" class="text-gray-700 mb-6"></p>
-            <button id="alertOkBtn" class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out">
-                OK
-            </button>
-        </div>
-    </div>
+    <div id="status"></div>
 
     <script>
-    // Paste the Web App URL from your Google Apps Script deployment here
-    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyLtb9FTU8c3ML9Z0QItUtnZcUcmOioWYnZeQMglE1bZPhp7HpazpWJQBC285IcSEfGdg/exec';
-     
+        const form = document.getElementById('testForm');
+        const statusDiv = document.getElementById('status');
+        const WEB_APP_URL = 'YOUR_WEB_APP_URL_HERE'; // PASTE THE URL HERE
 
-    function showCustomAlert(message, isSuccess = true) {
-      const modal = document.getElementById('customAlertModal');
-      const alertMessage = document.getElementById('alertMessage');
-      alertMessage.textContent = message;
-      alertMessage.className = `text-gray-700 mb-6 ${isSuccess ? 'text-green-600' : 'text-red-600'}`;
-      modal.style.display = 'flex';
-    }
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            statusDiv.textContent = 'Submitting...';
 
-    function closeCustomAlert() {
-      const modal = document.getElementById('customAlertModal');
-      modal.style.display = 'none';
-    }
+            const formData = {
+                message: document.getElementById('message').value
+            };
 
-    function toggleButtonState(buttonId, isProcessing, text = '') {
-      const button = document.getElementById(buttonId);
-      const spinner = button.querySelector('span:first-of-type');
-      const icon = button.querySelector('svg:last-of-type');
-      const buttonText = button.querySelector('span:last-of-type');
+            try {
+                const response = await fetch(WEB_APP_URL, {
+                    method: 'POST',
+                    body: JSON.stringify(formData),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
 
-      if (isProcessing) {
-        spinner.classList.remove('hidden');
-        icon.classList.add('hidden');
-        buttonText.textContent = text || 'Processing...';
-        button.disabled = true;
-      } else {
-        spinner.classList.add('hidden');
-        icon.classList.remove('hidden');
-        buttonText.textContent = text;
-        button.disabled = false;
-      }
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      const dataForm = document.getElementById('dataForm');
-      const clearFormBtn = document.getElementById('clearFormBtn');
-      const alertOkBtn = document.getElementById('alertOkBtn');
-      const customAlertModal = document.getElementById('customAlertModal');
-
-      dataForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        toggleButtonState('submitBtn', true, 'Submitting...');
-
-        const formData = {
-          timestamp: new Date().toLocaleString(),
-          name: document.getElementById('name').value,
-          phoneNumber: document.getElementById('phoneNumber').value,
-          tier: document.getElementById('tier').value,
-          driversLicense: document.getElementById('driversLicense').value,
-          placeOfResidence: document.getElementById('placeOfResidence').value,
-          emergencyContactName: document.getElementById('emergencyContactName').value,
-          emergencyContactPhoneNumber: document.getElementById('emergencyContactPhoneNumber').value,
-          vehicleOwner: document.querySelector('input[name="vehicleOwner"]:checked').value,
-          carMake: document.getElementById('carMake').value,
-          carModel: document.getElementById('carModel').value,
-          carYear: document.getElementById('carYear').value,
-          carNumber: document.getElementById('carNumber').value,
-          servicesOfInterest: []
-        };
-
-        document.querySelectorAll('input[name="servicesOfInterest"]:checked').forEach(checkbox => {
-          formData.servicesOfInterest.push(checkbox.value);
-        });
-
-        // Add this new part to handle the POST request
-        try {
-          const response = await fetch(WEB_APP_URL, {
-            method: 'POST',
-            body: JSON.stringify(formData),
-            headers: {
-              'Content-Type': 'application/json'
+                const result = await response.json();
+                
+                if (response.ok && result.success) {
+                    statusDiv.textContent = 'Success: ' + result.message;
+                    statusDiv.style.color = 'green';
+                    form.reset();
+                } else {
+                    throw new Error(result.message || 'Server error.');
+                }
+            } catch (error) {
+                statusDiv.textContent = 'Error: Failed to fetch. Check your Web App URL and deployment settings.';
+                statusDiv.style.color = 'red';
             }
-          });
-          const result = await response.json();
-          if (result.success) {
-            showCustomAlert(result.message, true);
-            dataForm.reset();
-          } else {
-            showCustomAlert(result.message, false);
-          }
-        } catch (error) {
-          showCustomAlert('An error occurred: ' + error.message, false);
-        } finally {
-          toggleButtonState('submitBtn', false, 'Submit Data');
-        }
-      });
+        });
+    </script>
 
-      clearFormBtn.addEventListener('click', () => {
-        dataForm.reset();
-      });
-
-      alertOkBtn.addEventListener('click', closeCustomAlert);
-      customAlertModal.addEventListener('click', (e) => {
-        if (e.target === customAlertModal) {
-          closeCustomAlert();
-        }
-      });
-    });
-</script>
 </body>
 </html>
